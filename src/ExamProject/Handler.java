@@ -17,11 +17,11 @@ public interface Handler {
 
     public int calculateTicketPrice(Car car);
 
-    public Date calculateParkingtimeInDays(Car car);
+    public String calculateParkingtimeInDays(Car car);
 
     public ArrayList<Car> getIllegallyParkedCars(int limit, ArrayList<Car> cars);
 
-    public ArrayList<Car> getReportedCars(String filename, ArrayList<Car> cars);
+    public ArrayList<Car> getReportedCars(String filename, ArrayList<Car> cars) throws IOException;
 
     public int calculateTotalTicketPrice(int ticketPrice, ArrayList<Car> cars);
 

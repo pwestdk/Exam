@@ -72,20 +72,26 @@ public class HandlerImpl implements Handler {
 	}
 
 	@Override
-	public Date calculateParkingtimeInDays(Car car) {
-		
-		return null;
+	public String calculateParkingtimeInDays(Car car) {
+		int days = car.getParkingHours() / 24;
+		int hours = car.getParkingHours() - days;
+		return "Days: " + days + " Hours: " + hours;
 	}
 
 	@Override
 	public ArrayList<Car> getIllegallyParkedCars(int limit, ArrayList<Car> cars) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Car> results = new ArrayList<Car>();
+		Car car = new CarImpl();
+		for(Car c : cars) {
+			if (car.getParkingHours() >= limit)
+				results.add(c);
+		}
+		return results;
 	}
 
 	@Override
-	public ArrayList<Car> getReportedCars(String filename, ArrayList<Car> cars) {
-		// TODO Auto-generated method stub
+	public ArrayList<Car> getReportedCars(String filename, ArrayList<Car> cars) throws IOException {
+		readFile("Stolen.csv");
 		return null;
 	}
 
