@@ -36,7 +36,7 @@ public class HandlerImpl implements Handler {
 	public ArrayList<Car> getCarData(String data) throws IOException {
 		ArrayList<Car> cars = new ArrayList<>();
 		
-		String[] carData = data.split(System.lineSeparator());
+		String[] carData = data.split("\n");
 		for(String s : carData) {
 			String[] temp = s.split(",");
 			cars.add(new CarImpl(temp[0], Integer.parseInt(temp[1])));
