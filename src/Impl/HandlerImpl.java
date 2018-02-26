@@ -2,6 +2,7 @@ package Impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import ExamProject.Car;
@@ -15,22 +16,33 @@ public class HandlerImpl implements Handler {
 		return null;
 	}
 
+	//What exception too throw and where??
 	@Override
 	public ArrayList<Car> getCarData(String data) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Car> cars = new ArrayList<>();
+		
+		String[] carData = data.split(System.lineSeparator());
+		for(String s : carData) {
+			String[] temp = s.split(",");
+			cars.add(new CarImpl(temp[0], Integer.parseInt(temp[1])));
+		}
+		
+		return cars;
 	}
 
 	@Override
 	public Car getLongestParked(ArrayList<Car> cars) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+		Car car = new CarImpl();
+		for(Car c : cars) {
+			if (car.getParkingHours() < c.getParkingHours())
+				car = c;
+		}
+		return car;
 	}
 
 	@Override
 	public void sortCarsByNumberPlate(ArrayList<Car> cars) {
-		// TODO Auto-generated method stub
-		
+	//	Collections.sort(cars);
 	}
 
 	@Override
@@ -41,13 +53,13 @@ public class HandlerImpl implements Handler {
 
 	@Override
 	public int calculateTicketPrice(Car car) {
-		// TODO Auto-generated method stub
-		return 0;
+		int hourPrice = 10;
+		return car.getParkingHours() * hourPrice;
 	}
 
 	@Override
 	public Date calculateParkingtimeInDays(Car car) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -65,8 +77,11 @@ public class HandlerImpl implements Handler {
 
 	@Override
 	public int calculateTotalTicketPrice(int ticketPrice, ArrayList<Car> cars) {
-		// TODO Auto-generated method stub
-		return 0;
+		int totalPrice = 0;
+		for(Car c : cars) {
+			totalPrice += c.getParkingHours() * ticketPrice;
+		}
+		return totalPrice;
 	}
 
 }
