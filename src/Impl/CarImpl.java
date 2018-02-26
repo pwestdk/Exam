@@ -21,6 +21,5 @@ public class CarImpl implements Car{
 
 	public int getParkingHours() {
 		return parkingHours;
-	}	
-	
+	}
 }

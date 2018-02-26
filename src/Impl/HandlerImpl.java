@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 import ExamProject.Car;
@@ -56,13 +57,29 @@ public class HandlerImpl implements Handler {
 
 	@Override
 	public void sortCarsByNumberPlate(ArrayList<Car> cars) {
-	//	Collections.sort(cars);
+		cars.sort(new Comparator<Car>() {
+
+			@Override
+			public int compare(Car c1, Car c2) {
+				return c1.getNumberPlate().compareTo(c2.getNumberPlate());
+			}
+			
+		});;
 	}
 
 	@Override
 	public void sortByTime(ArrayList<Car> cars) {
-		// TODO Auto-generated method stub
 		
+		cars.sort(new Comparator<Car>() {
+
+			@Override
+			public int compare(Car c1, Car c2) {
+				Integer c1Hours = c1.getParkingHours();
+				Integer c2Hours = c2.getParkingHours();
+				return c1Hours.compareTo(c2Hours) ;
+			}
+			
+		});;
 	}
 
 	@Override
