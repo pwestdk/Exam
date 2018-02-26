@@ -108,10 +108,18 @@ public class HandlerImpl implements Handler {
 
 	@Override
 	public ArrayList<Car> getReportedCars(String filename, ArrayList<Car> cars) throws IOException {
-		readFile("Stolen.csv");
-		return null;
+		ArrayList<Car> stolenCarsInParkingLot = new ArrayList<Car>();
+		String[] stolen = readFile("Stolen.csv").split(System.lineSeparator());
+		for(String s : stolen) {
+			for (Car c: cars) {
+				if (c.getNumberPlate().equals(s)) {
+					stolenCarsInParkingLot.add(c);
+				}
+			}
+		}
+		return stolenCarsInParkingLot;
 	}
-
+	
 	@Override
 	public int calculateTotalTicketPrice(int ticketPrice, ArrayList<Car> cars) {
 		int totalPrice = 0;
