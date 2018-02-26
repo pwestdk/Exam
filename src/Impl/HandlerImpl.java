@@ -1,5 +1,7 @@
 package Impl;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,9 +13,21 @@ import ExamProject.Handler;
 public class HandlerImpl implements Handler {
 
 	@Override
-	public String readFile(String filename) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+	public String readFile(String fileName) throws IOException {
+	    BufferedReader br = new BufferedReader(new FileReader(fileName));
+	    try {
+	        StringBuilder sb = new StringBuilder();
+	        String line = br.readLine();
+
+	        while (line != null) {
+	            sb.append(line);
+	            sb.append("\n");
+	            line = br.readLine();
+	        }
+	        return sb.toString();
+	    } finally {
+	        br.close();
+	    }
 	}
 
 	//What exception too throw and where??
