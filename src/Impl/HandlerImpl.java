@@ -91,7 +91,7 @@ public class HandlerImpl implements Handler {
 	@Override
 	public String calculateParkingtimeInDays(Car car) {
 		int days = car.getParkingHours() / 24;
-		int hours = car.getParkingHours() - days;
+		int hours = car.getParkingHours() - days * 24;
 		return "Days: " + days + " Hours: " + hours;
 	}
 
