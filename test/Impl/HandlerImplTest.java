@@ -1,15 +1,11 @@
 package Impl;
-
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import ExamProject.Car;
 
 import ExamProject.Car;
 
@@ -17,10 +13,12 @@ class HandlerImplTest {
 	
 	// Fields
 	HandlerImpl h = new HandlerImpl();
-	private String data;
+	private String carData;
+	private ArrayList<Car> cars;
 
 	@Test
 	void testReadFile() throws IOException {
+		String data;
 		data = h.readFile("Cars.csv");
         
         int expected = 143;
@@ -37,7 +35,7 @@ class HandlerImplTest {
 	}
 
 
-	@Test
+	
 	void testGetCarData() {
 		try {
 			ArrayList<Car> cars = h.getCarData(h.readFile("Cars.csv"));
@@ -60,25 +58,30 @@ class HandlerImplTest {
 	//Kasper
 	@Test
 	void testSortCarsByNumberPlate() {
-		
+//			ArrayList<Car> cars = h.getCarData(h.readFile("Cars.csv"));
+			h.sortCarsByNumberPlate(cars);
+			assertAll("Cars",
+					() -> assertEquals("AF22451", cars.get(0).getNumberPlate()),
+					() -> assertEquals("AF22457", cars.get((cars.size()-1)/2).getNumberPlate()),
+					() -> assertEquals("CF22751", cars.get(cars.size()-1).getNumberPlate()));
 	}
 
 	//Philip
 	@Test
 	void testSortByTime() {
-		
+
 	}
 
-	//Kasper
-	@Test
-	void testCalculateTicketPrice() {
-		Car car1 = new CarImpl("AF22455", 0);
+	@ParameterizedTest
+	@ValueSource(ints = {0, 100, 1000})
+	void testCalculateTicketPrice(int time) {
+		Car car1 = new CarImpl("AF22455", time);
 		
-		int expected1 = 0;
+		int expected1 = time * 10;
         int actual1 = h.calculateTicketPrice(car1);
         assertEquals(expected1, actual1);
         
-        Car car2 = new CarImpl("AF22455", 100);
+/*        Car car2 = new CarImpl("AF22455", 100);
 		
 		int expected2 = 1000;
         int actual2 = h.calculateTicketPrice(car2);
@@ -88,7 +91,7 @@ class HandlerImplTest {
 		
 		int expected3 = 10000;
         int actual3 = h.calculateTicketPrice(car3);
-        assertEquals(expected3, actual3);	
+        assertEquals(expected3, actual3);	*/
 	}
 
 	//Philip
@@ -119,16 +122,12 @@ class HandlerImplTest {
 	void testGetIllegallyParkedCars() {
 	}
 
-	void testGetReportedCars(String data) {
-		try {
-			ArrayList<Car> cars = h.getReportedCars("Stolen.csv", h.getCarData(h.readFile("Cars.csv")));
+	@Test
+	void testGetReportedCars() throws IOException {
+			ArrayList<Car> stolen = h.getReportedCars("Stolen.csv", cars);
 			assertAll("Cars",
-					() -> assertEquals("AF22459", cars.get(0).getNumberPlate()),
-					() -> assertEquals("BF22414", cars.get(1).getNumberPlate()));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+					() -> assertEquals("AF22459", stolen.get(0).getNumberPlate()),
+					() -> assertEquals("BF22414", stolen.get(1).getNumberPlate()));
 	}
 
 	//Philip
@@ -137,4 +136,24 @@ class HandlerImplTest {
 		
 	}
 
+	@BeforeEach
+	void setUp() {
+		carData = "";
+		cars = new ArrayList<Car>() {{
+			add(new CarImpl("AF22454",1));
+			add(new CarImpl("AF22455",1));
+			add(new CarImpl("AF22456",21));
+			add(new CarImpl("AF22457",3));
+			add(new CarImpl("AF22458",13));
+			add(new CarImpl("AF22459",5));
+			add(new CarImpl("AF22451",8));
+			add(new CarImpl("AF22452",3));
+			add(new CarImpl("AF22453",9));
+			add(new CarImpl("BF22414",22));
+			add(new CarImpl("BF22424",4));
+			add(new CarImpl("BF22434",5));
+			add(new CarImpl("BF22444",3));
+			add(new CarImpl("CF22751",2));
+		}};
+	}
 }

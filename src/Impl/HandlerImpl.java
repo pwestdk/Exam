@@ -109,7 +109,7 @@ public class HandlerImpl implements Handler {
 	@Override
 	public ArrayList<Car> getReportedCars(String filename, ArrayList<Car> cars) throws IOException {
 		ArrayList<Car> stolenCarsInParkingLot = new ArrayList<Car>();
-		String[] stolen = readFile("Stolen.csv").split(System.lineSeparator());
+		String[] stolen = readFile("Stolen.csv").split("\n");
 		for(String s : stolen) {
 			for (Car c: cars) {
 				if (c.getNumberPlate().equals(s)) {
