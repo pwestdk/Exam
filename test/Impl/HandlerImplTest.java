@@ -72,6 +72,12 @@ class HandlerImplTest {
 	//Philip
 	@Test
 	void testSortByTime() {
+		h.sortByTime(cars);
+		assertAll("Cars",
+				() -> assertEquals("AF22454", cars.get(0).getNumberPlate()),
+				() -> assertEquals("BF22424", cars.get((cars.size()-1)/2).getNumberPlate()),
+				() -> assertEquals("BF22414", cars.get(cars.size()-1).getNumberPlate()));
+		
 //		cars = new ArrayList<Car>() {{
 //			add(new CarImpl("AF22454",1));
 //			add(new CarImpl("AF22455",2));
@@ -92,18 +98,6 @@ class HandlerImplTest {
 		int expected1 = time * 10;
         int actual1 = h.calculateTicketPrice(car1);
         assertEquals(expected1, actual1);
-        
-        Car car2 = new CarImpl("AF22455", 100);
-		
-		int expected2 = 1000;
-        int actual2 = h.calculateTicketPrice(car2);
-        assertEquals(expected2, actual2);
-        
-        Car car3 = new CarImpl("AF22455", 1000);
-		
-		int expected3 = 10000;
-        int actual3 = h.calculateTicketPrice(car3);
-        assertEquals(expected3, actual3);	
 	}
 
 	//Philip
@@ -129,9 +123,13 @@ class HandlerImplTest {
 	}
 
 
-	//Kasper
-	@Test
+	//Max time is 12 hours
 	void testGetIllegallyParkedCars() {
+	ArrayList<Car> illegal = h.getIllegallyParkedCars(12, cars);
+	assertAll("Illegal",
+			() -> assertTrue(illegal.contains(cars.get(2))),
+			() -> assertTrue(illegal.contains(cars.get(4))),
+			() -> assertTrue(illegal.contains(cars.get(9))));
 	}
 
 	@Test
