@@ -141,25 +141,11 @@ class HandlerImplTest {
 	}
 
 	//Philip
-	@Test
-	void testCalculateTotalTicketPrice() {
-		Car car1 = new CarImpl("AF22455", 0);
-		
-		int expected1 = 0;
-        int actual1 = h.calculateTicketPrice(car1);
-        assertEquals(expected1, actual1);
-        
-        Car car2 = new CarImpl("AF22455", 10);
-		
-		int expected2 = 100;
-        int actual2 = h.calculateTicketPrice(car2);
-        assertEquals(expected2, actual2);
-        
-        Car car3 = new CarImpl("AF22455", 50);
-		
-		int expected3 = 500;
-        int actual3 = h.calculateTicketPrice(car3);
-        assertEquals(expected3, actual3);
+	@ParameterizedTest
+	@ValueSource(ints = {0, 10, 50})
+	void testCalculateTotalTicketPrice(int price) {
+		int totalPrice = h.calculateTotalTicketPrice(price, cars);
+		assertEquals(price * 100, totalPrice);
 	}
 
 	@BeforeEach
