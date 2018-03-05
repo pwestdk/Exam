@@ -35,7 +35,7 @@ class HandlerImplTest {
 	}
 
 
-	
+	@Test
 	void testGetCarData() {
 		try {
 			ArrayList<Car> cars = h.getCarData(h.readFile("Cars.csv"));
